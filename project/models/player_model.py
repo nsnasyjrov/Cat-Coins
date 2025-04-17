@@ -7,8 +7,9 @@ db = SQLAlchemy()
 class PlayerModel(db.Model):
     __tablename__ = 'players'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), unique=True, nullable=False)
+    username = db.Column(db.String(80), unique=True, nullable=False)
     x = db.Column(db.Integer, nullable=False)
     y = db.Column(db.Integer, nullable=False)
-    joined_at = db.Column(db.DateTime, default=datetime.utcnow())
+    joined_at = db.Column(db.DateTime, default=datetime.utcnow)
+    coins_selected = db.Column(db.Integer, nullable=False)
 
