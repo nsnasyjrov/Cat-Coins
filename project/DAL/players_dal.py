@@ -29,3 +29,17 @@ class PlayerDAL:
         finally:
             conn.close()
 
+    @staticmethod
+    def return_top_players():
+        conn = connect_db()
+        try:
+            cur = conn.cursor()
+            stat = "SELECT username, coins_collected FROM players ORDER BY coins_collected DESC LIMIT 5"
+            res = cur.execute(stat)
+
+            return res.fetchall()
+        except Exception as e:
+            print(f"Ошибка при возврате пользователей: {e}")
+        finally:
+            conn.close()
+

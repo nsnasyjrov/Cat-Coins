@@ -26,3 +26,10 @@ class PlayerBL:
             return first_name
         else:
             return "Котёночек"
+
+    @staticmethod
+    def get_top_players():
+        players = PlayerDAL.return_top_players()
+        top_players = "\n".join([f"{i+1}. {username} — {coins_collected} 🪙" for i, (username, coins_collected) in enumerate(players)])
+
+        return top_players
