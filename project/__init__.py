@@ -19,7 +19,7 @@ def create_app():
 
     def run_bot():
         bot = TelegramGameBot()
-        bot.run()
+        bot.run_bot()
 
     Thread(target=run_bot).start()
 
