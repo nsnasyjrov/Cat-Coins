@@ -1,13 +1,13 @@
-from project.database.db_utils import connect_db
+from project.flask_server.database.db_utils import connect_db
 
 class PlayerDAL:
     @staticmethod
-    def add_player_dal(username: str, chat_id: int,  x, y):
+    def add_player_dal(username: str, chat_id: int):
         conn = connect_db()
         cur = conn.cursor()
         try:
-            stat = """INSERT INTO players (username, chat_id,  x, y) VALUES (?, ?, ?, ?)"""
-            cur.execute(stat, (username, chat_id, x, y))
+            stat = """INSERT INTO players (username, chat_id) VALUES (?, ?)"""
+            cur.execute(stat, (username, chat_id))
             conn.commit()
         except Exception as e:
             print(f"Ошибка при создании пользователя: {e}")

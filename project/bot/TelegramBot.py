@@ -1,7 +1,7 @@
 import os
 from telebot import TeleBot
 
-from project.BL.players_bl import PlayerBL
+from project.flask_server.BL.players_bl import PlayerBL
 
 class TelegramGameBot:
     def __init__(self):
