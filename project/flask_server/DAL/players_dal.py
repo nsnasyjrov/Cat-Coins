@@ -2,12 +2,12 @@ from project.flask_server.database.db_utils import connect_db
 
 class PlayerDAL:
     @staticmethod
-    def add_player_dal(username: str, chat_id: int):
+    def add_player_dal(chat_id: int, username: str):
         conn = connect_db()
         cur = conn.cursor()
         try:
-            stat = """INSERT INTO players (username, chat_id) VALUES (?, ?)"""
-            cur.execute(stat, (username, chat_id))
+            stat = """INSERT INTO players (chat_id, username) VALUES (?, ?)"""
+            cur.execute(stat, (chat_id, username))
             conn.commit()
         except Exception as e:
             print(f"Ошибка при создании пользователя: {e}")
@@ -44,3 +44,34 @@ class PlayerDAL:
         finally:
             conn.close()
 
+    @staticmethod
+    def get_coordinate(chat_id: int):
+        conn = connect_db()
+        try:
+            cur = conn.cursor()
+            stat = """SELECT X, Y FROM players where chat_id = ?"""
+            player = cur.execute(stat, (chat_id,)).fetchone()
+
+            return player
+        except Exception as e:
+            print(f"Ошибка при получении координат: {e}")
+        finally:
+            conn.close()
+
+    @staticmethod
+    def coordinate_change(chat_id, x: int, y: int):
+        conn = connect_db()
+        try:
+            cur = conn.cursor()
+            stat = """UPDATE players SET x = ?, y = ? WHERE chat_id = ?"""
+            cur.execute(stat, (x, y, chat_id))
+            conn.commit()
+
+            return True
+        except Exception as e:
+            print(f"Произошла ошибка при изменении координат: {e}")
+            conn.rollback()
+
+            return False
+        finally:
+            conn.close()
