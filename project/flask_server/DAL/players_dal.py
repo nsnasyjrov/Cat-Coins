@@ -16,16 +16,17 @@ class PlayerDAL:
             conn.close()
 
     @staticmethod
-    def check_player_exists(chat_id):
+    def check_player_exists(chat_id) -> int:
         conn = connect_db()
         try:
             cur = conn.cursor()
-            stat = """SELECT COUNT(*) FROM players WHERE chat_id = ?"""
-            res = cur.execute(stat, (chat_id,))
+            stat = """SELECT COUNT(*) FROM players WHERE  chat_id= ?"""
+            count = cur.execute(stat, (chat_id,)).fetchone()[0]
 
-            return res.fetchone()[0]
+            return count
         except Exception as e:
             print(f"Ошибка при поиске пользователя: {e }")
+            return -1
         finally:
             conn.close()
 

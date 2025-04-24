@@ -15,11 +15,10 @@ def join():
         chat_id = data["chat_id"]
         username = data.get("username", "Котёночек")
 
-        result = PlayerBL.add_user_bl(chat_id, username)
-
-        return jsonify({"success": f"Пользователь успешно создан!\n{result}"})
+        response, status_code = PlayerBL.add_user_bl(chat_id, username)
+        return jsonify(response), status_code
     except Exception as e:
-        return jsonify({"error": f"Ошибка при добавлении пользователя: {e}"}), 400
+        return jsonify({"error": f"Ошибка при добавлении пользователя: {e}"})
 
 @player_routes.route('/top', methods=["GET"])
 def top():
