@@ -6,11 +6,8 @@ from project.flask_server.DAL.players_dal import PlayerDAL
 
 player_routes = Blueprint('game_routes', __name__)
 
-#POST /join — регистрация игрока
-#POST /move — действие игрока (движение)
-#GET /state — отдать состояние игрового мира (для отрисовки в Pgz)
-#GET /top — таблица лидеров (HTML)
-#GET /about — страница с твоим описанием (HTML)
+#GET /state — отдать состояние игрового мира (для отрисовки в Pgz) TODO
+#GET /about — страница с твоим описанием (HTML) TODO
 
 @player_routes.route('/join', methods=["POST"])
 def join():
