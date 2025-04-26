@@ -27,21 +27,19 @@ class PlayerBL:
 
         if not player_coord:
             return {"status": "error",
-                    "message": "Игрока с таким chat_id нет или он не найден в базе данных"}, None
+                    "message": "Игрока с таким chat_id нет или он не найден в базе данных"}
 
         return {"status": "success",
-                "message": "Координаты успешно переданы"}, player_coord
+                "message": "Координаты успешно переданы"}
 
     @staticmethod
-    def coordinate_change(direction: str, chat_id: int):
+    def coordinate_change(direction: str, chat_id: int) -> dict:
         player_coord = PlayerDAL.get_coordinate(chat_id)
 
         if not player_coord:
             return {"status": "error", "message": "Игрок с таким chat_id не найден"}
 
         x, y = player_coord["x"], player_coord["y"]
-
-        print(f"X: {x}\nY: {y}")
 
         if direction == "left":
             x -= 32

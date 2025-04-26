@@ -36,26 +36,24 @@ def join():
 def move():
     try:
         data = request.get_json()
-        # chat_id в отличие от username по-умолчанию уникален, поэтому лучше его юзать
         chat_id = data["chat_id"]
         direction = validate_coordinate(data["direction"])
-
-        print(f"Направление: {direction}\nЧат: {chat_id}")
 
         if not chat_id or not direction:
             return jsonify({"status": "error", "message": "Поля заполнены некорректно или не заполнены в принципе"}), 400
 
-        response, player_coord = PlayerBL.get_coordinate(chat_id)
+        player_coord = PlayerBL.get_coordinate(chat_id)
 
-        if player_coord is None:
+        if player_coord["status"] == "error":
+            return jsonify(player_coord), 400
+
+        response = PlayerBL.coordinate_change(direction, chat_id)
+        if response["status"] == "success":
+            return jsonify(response), 201
+        else:
             return jsonify(response), 400
-
-        PlayerBL.coordinate_change(direction, chat_id)
-
-        return jsonify({"status": "success",
-                        "message": response["message"], }), 201
     except Exception as e:
-        print(f"Произошла ошибка при передаче координат: {e}")
+        return jsonify({"error": f"Ошибка при изменении координат пользователя: {e}"})
 
 @player_routes.route('/top', methods=["GET"])
 def top():

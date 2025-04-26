@@ -52,7 +52,10 @@ class PlayerDAL:
             stat = """SELECT X, Y FROM players where chat_id = ?"""
             player = cur.execute(stat, (chat_id,)).fetchone()
 
-            return player
+            if player:
+                return {"x": player[0], "y": player[1]}
+            else:
+                return None
         except Exception as e:
             print(f"Ошибка при получении координат: {e}")
         finally:

@@ -1,6 +1,5 @@
 from project.flask_server.DAL.players_dal import PlayerDAL
 
-
 def validate_register(chat_id) -> dict:
     count = PlayerDAL.check_player_exists(chat_id)
 
