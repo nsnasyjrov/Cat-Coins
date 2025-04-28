@@ -10,7 +10,7 @@ class PlayerBL:
             PlayerDAL.add_player_dal(chat_id, username)
             return {"status": "success", "message": validation_result["message"], "chat_id": chat_id, "username": username}
         else:
-            return {"status": "error", "message": validation_result["message"]}
+            return {"status": validation_result["status"], "message": validation_result["message"]}
 
     @staticmethod
     def get_top_players():

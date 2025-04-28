@@ -23,6 +23,8 @@ def join():
         response = PlayerBL.add_user_bl(chat_id, username)
         if response["status"] == "success":
             return jsonify(response), 201
+        elif response["status"] == "already_exists":
+            return jsonify(response), 200
         else:
             return jsonify(response), 400
     except Exception as e:
