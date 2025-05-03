@@ -2,7 +2,6 @@ from flask import Blueprint, request, jsonify
 
 from project.flask_server.BL.players_bl import PlayerBL
 from project.flask_server.BL.validators import validate_coordinate
-from project.flask_server.DAL.players_dal import PlayerDAL
 
 player_routes = Blueprint('game_routes', __name__)
 
@@ -62,3 +61,13 @@ def top():
         return {"message": "Список игроков недоступен!"}, 200
 
     return {"success": res}, 200
+
+@player_routes.route('/my_profile', methods=["POST"])
+def my_profile():
+    data = request.get_json()
+    res = PlayerBL.get_player_info(data["chat_id"])
+
+    if "success" in res:
+        return jsonify(res), 200
+    else:
+        return jsonify(res), 400

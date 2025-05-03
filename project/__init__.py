@@ -9,5 +9,5 @@ def create_app():
     app = Flask(__name__)
     create_tables()
 
-    app.register_blueprint(app_platform, url_prefix='/api')
+    app.register_blueprint(app_platform)
     return app

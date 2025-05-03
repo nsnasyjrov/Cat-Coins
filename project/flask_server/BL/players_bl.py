@@ -56,3 +56,12 @@ class PlayerBL:
             return {"status": "success", "message": "Координаты успешно изменены"}
         else:
             return {"status": "error", "message": "Не получилось изменить координаты"}
+
+    @staticmethod
+    def get_player_info(chat_id: int):
+        player_info = PlayerDAL.get_player_info(chat_id)
+
+        if not player_info:
+            return {"status": "error", "message": "Player not found"}
+
+        return {"status": "success", "message": player_info}

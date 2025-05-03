@@ -1,6 +1,7 @@
 import requests
 
 from ..utils.bot_utils import TelegramBotUtils
+from ..utils.telegram_constants import MAIN_MENU_BUTTONS
 from ...flask_server.config import API_URL
 
 def register_common_handlers(bot):
@@ -26,3 +27,12 @@ def register_common_handlers(bot):
                 TelegramBotUtils.mainmenu_buttons(bot, message.chat.id)
         except Exception as e:
             print(f"Ошибка при подключении: {e}")
+
+    @bot.message_handler(func=lambda message: message.text == MAIN_MENU_BUTTONS[0])
+    def handle_my_profile(message):
+        payload = {
+            "chat_id": message.chat.id,
+        }
+
+        TelegramBotUtils.send_message(bot,message.chat.id,
+                                      "Ты сделал запрос на открытие своего профиля")

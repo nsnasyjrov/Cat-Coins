@@ -78,3 +78,18 @@ class PlayerDAL:
             return False
         finally:
             conn.close()
+
+    @staticmethod
+    def get_player_info(chat_id: int):
+        conn = connect_db()
+        try:
+            cur = conn.cursor()
+            stmt = """SELECT * FROM players WHERE id = ?"""
+            res = cur.execute(stmt, (chat_id,)).fetchone()
+
+            return res
+        except Exception as e:
+            print(f"Ошибка при получении информации об игроке из базы данных: {e}")
+        finally:
+            conn.close()
+
