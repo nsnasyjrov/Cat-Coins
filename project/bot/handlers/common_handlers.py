@@ -34,5 +34,12 @@ def register_common_handlers(bot):
             "chat_id": message.chat.id,
         }
 
-        TelegramBotUtils.send_message(bot,message.chat.id,
-                                      "Ты сделал запрос на открытие своего профиля")
+        # TelegramBotUtils.send_message(bot,message.chat.id,
+        #                               "Ты сделал запрос на открытие своего профиля")
+        res = requests.post(f'{API_URL}/my_profile', json=payload)
+        print(res.text)
+
+        if res.status_code == 200:
+            TelegramBotUtils.send_message(bot, message.chat.id, str(res.text))
+        else:
+            TelegramBotUtils.send_message(bot, message.chat.id, str(res.text))

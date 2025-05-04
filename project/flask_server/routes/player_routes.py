@@ -65,7 +65,10 @@ def top():
 @player_routes.route('/my_profile', methods=["POST"])
 def my_profile():
     data = request.get_json()
+    print(data["chat_id"])
     res = PlayerBL.get_player_info(data["chat_id"])
+
+    print(res)
 
     if "success" in res:
         return jsonify(res), 200

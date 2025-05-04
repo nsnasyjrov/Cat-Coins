@@ -84,12 +84,11 @@ class PlayerDAL:
         conn = connect_db()
         try:
             cur = conn.cursor()
-            stmt = """SELECT * FROM players WHERE id = ?"""
-            res = cur.execute(stmt, (chat_id,)).fetchone()
+            stmt = """SELECT * FROM players WHERE chat_id = ?"""
+            res = cur.execute(stmt, (chat_id,)).fetchall()
 
             return res
         except Exception as e:
             print(f"Ошибка при получении информации об игроке из базы данных: {e}")
         finally:
             conn.close()
-
