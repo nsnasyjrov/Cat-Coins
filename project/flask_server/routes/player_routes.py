@@ -58,17 +58,15 @@ def top():
     res = PlayerBL.get_top_players()
 
     if not res:
-        return {"message": "Список игроков недоступен!"}, 200
+        return jsonify(res), 400
 
-    return {"success": res}, 200
+    return jsonify(res), 200
 
 @player_routes.route('/my_profile', methods=["POST"])
 def my_profile():
     data = request.get_json()
-    print(data["chat_id"])
     res = PlayerBL.get_player_info(data["chat_id"])
 
-    print(res)
 
     if res["status"] == "success":
         return jsonify(res), 200

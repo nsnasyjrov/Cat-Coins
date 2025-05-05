@@ -36,11 +36,13 @@ class PlayerDAL:
     def return_top_players():
         conn = connect_db()
         try:
+            conn.row_factory = sqlite3.Row
             cur = conn.cursor()
-            stat = "SELECT username, coins_collected FROM players ORDER BY coins_collected DESC LIMIT 5"
-            res = cur.execute(stat)
+            stat = "SELECT username, coins_collected FROM players ORDER BY coins_collected DESC LIMIT 10"
+            raw_res = cur.execute(stat)
+            res = [dict(raw) for raw in raw_res]
 
-            return res.fetchall()
+            return res
         except Exception as e:
             print(f"Ошибка при возврате пользователей: {e}")
         finally:

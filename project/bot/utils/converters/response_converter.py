@@ -4,7 +4,7 @@ from requests import Response
 
 class ResponseConverter():
     @staticmethod
-    def response_my_profile(response: Response):
+    def response_my_profileR(response: Response):
         # добавить обработку случаев, когда статус код 200 и 400 - вынести ее из common_handlers
 
         data = json.loads(response.text)

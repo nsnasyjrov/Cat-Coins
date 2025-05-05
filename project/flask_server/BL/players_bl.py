@@ -16,10 +16,9 @@ class PlayerBL:
     def get_top_players():
         players = PlayerDAL.return_top_players()
         if not players:
-            return None
-
-        return "\n".join(
-            [f"{i + 1}. {username} — {coins_collected} " for i, (username, coins_collected) in enumerate(players)])
+            return {"status": "error", "message": "Players not found"}
+        else:
+            return {"status": "success", "message": players}
 
     @staticmethod
     def get_coordinate(chat_id: int):
