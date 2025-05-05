@@ -70,7 +70,7 @@ def my_profile():
 
     print(res)
 
-    if "success" in res:
+    if res["status"] == "success":
         return jsonify(res), 200
     else:
         return jsonify(res), 400

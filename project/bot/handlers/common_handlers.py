@@ -1,6 +1,7 @@
 import requests
 
 from ..utils.bot_utils import TelegramBotUtils
+from ..utils.converters.response_converter import ResponseConverter
 from ..utils.telegram_constants import MAIN_MENU_BUTTONS
 from ...flask_server.config import API_URL
 
@@ -34,12 +35,10 @@ def register_common_handlers(bot):
             "chat_id": message.chat.id,
         }
 
-        # TelegramBotUtils.send_message(bot,message.chat.id,
-        #                               "Ты сделал запрос на открытие своего профиля")
-        res = requests.post(f'{API_URL}/my_profile', json=payload)
-        print(res.text)
+        raw_res = requests.post(f'{API_URL}/my_profile', json=payload)
 
-        if res.status_code == 200:
-            TelegramBotUtils.send_message(bot, message.chat.id, str(res.text))
+        if raw_res.status_code == 200:
+            TelegramBotUtils.send_message(bot, message.chat.id, ResponseConverter.response_my_profile(raw_res))
         else:
-            TelegramBotUtils.send_message(bot, message.chat.id, str(res.text))
+            # убрать после
+            TelegramBotUtils.send_message(bot, message.chat.id, "Не нашел по тебе информации")
