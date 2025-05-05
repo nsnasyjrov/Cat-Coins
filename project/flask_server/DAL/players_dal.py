@@ -1,3 +1,5 @@
+import sqlite3
+
 from project.flask_server.database.db_utils import connect_db
 
 class PlayerDAL:
@@ -83,11 +85,13 @@ class PlayerDAL:
     def get_player_info(chat_id: int):
         conn = connect_db()
         try:
+            conn.row_factory = sqlite3.Row
             cur = conn.cursor()
             stmt = """SELECT * FROM players WHERE chat_id = ?"""
-            res = cur.execute(stmt, (chat_id,)).fetchall()
+            raw_res = cur.execute(stmt, (chat_id,)).fetchall()
+            result = [dict(row) for row in raw_res]
 
-            return res
+            return result
         except Exception as e:
             print(f"Ошибка при получении информации об игроке из базы данных: {e}")
         finally:
